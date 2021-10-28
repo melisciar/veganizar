@@ -73,5 +73,3 @@ buck-out/
 babel.config.js
 metro.config.js
 .flowconfig
-.package.json
-.package-lock.json
