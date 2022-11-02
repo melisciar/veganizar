@@ -19,33 +19,24 @@ const Ingredientes = props => {
 
   //debe filtrar por nombre e INS
   const handleSearch = text => {
-    //eliminar el filtro anterior y aplicar el nuevo
-    //esperar a que se cargue la lista y filtrar
-
-    const filtered = ing.filter(ing => {
-      //búsqueda por INS
-      console.log(ing);
-      console.log(ing.INS);
-      console.log(typeof ing.INS);
-      console.log(typeof ing.nombre);
-      //si existe ing.ins y es un string, filtrar por INS
-      if (ing.INS && typeof ing.INS === 'string') {
-        return ing.INS.includes(text) || ing.nombre.includes(text);
-      } else {
-        return ing.nombre.includes(text);
-      }
-    });
-    
-    console.log("antes de filtrar",filtered);
-    setIng(filtered);
-    console.log("después",filtered)
-
+    function filtrar() {
+      setIng(
+        ing.filter(ing => {
+          //si existe ing.ins y es un string, filtrar por INS
+          if (ing.INS && typeof ing.INS === 'string') {
+            return ing.INS.includes(text) || ing.nombre.includes(text);
+          } else {
+            return ing.nombre.includes(text);
+          }
+        }),
+      );
+    }
     if (text === '') {
       getData();
+    } else {
+      filtrar();
     }
-
   };
-
 
   return (
     <View style={styles.lista}>
@@ -55,7 +46,8 @@ const Ingredientes = props => {
         data={ing}
         renderItem={
           ({item}) => (
-            <TouchableOpacity onPress={() => props.navigation.navigate('Detalle', {item})}
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Detalle', {item})}
               style={[
                 styles.ingrediente,
                 item.vegano

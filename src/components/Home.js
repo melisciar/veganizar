@@ -10,6 +10,7 @@ import perfil from '../perfil';
 import escanear from '../escanear';
 import ingredientes from '../ingredientes';
 import Detalle from '../detalle';
+import SubCategorias from '../subcategorias';
 const Stack = createStackNavigator();
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
       <Stack.Screen name="escanear" component={escanear} />
       <Stack.Screen name="ingredientes" component={ingredientes} />
       <Stack.Screen name="Detalle" component={Detalle} />
+      <Stack.Screen name="SubCategorias" component={SubCategorias} />
     </Stack.Navigator>
   );
 };

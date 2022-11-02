@@ -5,13 +5,13 @@ import Http from './lib/http';
 
 
 
-const Categorias = () => {
+const SubCategorias = ({route}) => {
   //listado de categorias
   const [cat, setCat] = useState({});
   const [loading, setLoading] = useState(false);
   const getData = async () => {
     setLoading(true);
-    let res = await Http.instance.get('productos');
+    let res = await Http.instance.search('');
     setCat(res);
   };
   useEffect(() => {
@@ -26,7 +26,7 @@ const Categorias = () => {
       numColumns={2}
       renderItem={
         ({item}) => (
-          <TouchableOpacity onPress={() => props.navigation.navigate('SubCategorias', {item})}
+          <TouchableOpacity onPress={() => props.navigation.navigate('Detalle', {item})}
             style={[
               styles.item
             ]}>
@@ -39,7 +39,7 @@ const Categorias = () => {
   </View>);
 };
 
-export default Categorias;
+export default SubCategorias;
 
 const styles = StyleSheet.create({
   lista: {
