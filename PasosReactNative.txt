@@ -1,0 +1,46 @@
+﻿Pasos React Native
+
+1.	Instalar Node Js en tu computadora. Para hacerlo, ir https://nodejs.org/en/  e instalar la versión recomendada;
+
+2.	Abrir Powershell y verificar que esté instalado Node poniendo el comando node –versión;
+
+3.	Instalar  Chocolatey, un gestor de paquetes para Windows que es muy parecido a Brew de Mac con el comando:
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol
+-bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+4.	Confirmar que esté instalado con el comando choco.
+
+5.	Instalar Python y OpenJDK8 con el siguiente comando: choco install -y python2 openjdk8
+
+6.	Instalar Android estudio descargándolo desde https://developer.android.com/studio;
+
+7.	Ahora, asegurarse de tener instalado Android 10 SDK. Para comprobarlo, ir a:
+ Preferences → Appearance & Behavior → System Settings → Android SDK;
+
+8.	Revisar que, en la parte inferior, esté seleccionado el checkbox que dice “Show package details”;
+
+9.	Desplegamos Android10 y tildamos los siguientes opciones: Android SDK Platform 29 y Intel x86 Atom_64 System Image o Google APIs Intel x86 Atom System Image;
+
+10.	Ir a la pestaña SDK Tools, asegurarse de que esté seleccionado Android SDK Build-Tools y hacer lo mismo que en el paso anterior, 
+seleccionar la opción del checkbox “Show package details” donde está la lista de versiones y asegurarse de que esté la versión 29.0.2;
+
+11.	Por último, cuando esté todo seleccionado, apretar el botón Apply;
+
+12.	Configurar ANDROID_HOME Environment;
+
+13.	Poner “variables de entorno” en el buscador de Windows y abrir la ventana;
+
+14.	En “Variable de Usuario” y “Variable de sistema” poner “Nueva”, nombrarla ANDROID_HOME y sacar la url de Android Studio como hace Jony;
+
+15.	Aceptar todo y reiniciar la computadora;
+
+16.	Abrirel Powershell y chequear si figura la variable ANDROID_HOME con el siguiente comando: Get-ChildItem -Path Env:\ 
+
+17.	Para crear nuestra app usar el siguiente comando: npx react-native init NOMBREDETUAPP
+
+18.	Correr la app con el siguiente comando: npx react-native run-android
+
+
+
+PD. No te olvides de crear la máquina virtual como hace Jony en el video para que te funcione todo bien.
