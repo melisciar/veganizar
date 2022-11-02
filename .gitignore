@@ -29,7 +29,6 @@ build/
 local.properties
 *.iml
 *.hprof
-google-services.json
 
 # node.js
 #
@@ -60,3 +59,4 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+android/app/google-services.json
