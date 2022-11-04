@@ -3,43 +3,39 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Text, View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import Http from './lib/http';
 
-
-
-const SubCategorias = ({route}) => {
+const Productos = ({route}) => {
   //listado de categorias
-  const [cat, setCat] = useState({});
+  const element = route.params;
+  const [prod, setProd] = useState({});
   const [loading, setLoading] = useState(false);
   const getData = async () => {
     setLoading(true);
-    let res = await Http.instance.search('');
-    setCat(res);
+    let res = await Http.instance.get('productos');
+    setProd(res);
   };
   useEffect(() => {
     getData();
   }, []);
 
-  return(
-  <View style={styles.lista}>
-    <FlatList
-      style={styles.lista}
-      data={cat}
-      numColumns={2}
-      renderItem={
-        ({item}) => (
-          <TouchableOpacity onPress={() => props.navigation.navigate('Detalle', {item})}
-            style={[
-              styles.item
-            ]}>
+  return (
+    <View style={styles.lista}>
+      <FlatList
+        style={styles.lista}
+        data={prod}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Producto', {item})}
+            style={[styles.item]}>
             <Text style={styles.texto}>{item.nombre}</Text>
           </TouchableOpacity>
-        )
-      }
-      keyExtractor={(item, index) => index.toString()}
-    />
-  </View>);
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
 };
 
-export default SubCategorias;
+export default Productos;
 
 const styles = StyleSheet.create({
   lista: {
@@ -56,9 +52,8 @@ const styles = StyleSheet.create({
   },
   item: {
     margin: 2,
-    padding: "10%",
+    padding: '10%',
     borderRadius: 2,
-    backgroundColor: 'green'
+    backgroundColor: 'green',
   },
-
-})    
+});

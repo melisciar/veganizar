@@ -21,6 +21,27 @@ class Http {
     }
   };
 
+  //buscar un producto por su codigo de barras, devuelve un objeto
+  buscarProducto = async codigo => {
+    try {
+      let producto = {};
+      await firestore()
+        .collection('productos')
+        .where('codbarra', '==', parseInt(codigo))
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            producto = doc.data();
+          });
+        });
+      return producto;
+    } catch (err) {
+      console.log(err, 'pasaron cosas reina');
+      throw Error(err);
+    }
+  };
+
   post = async (coleccion, body) => {
     try {
       const respuesta = await firestore().collection(coleccion).add(body);
@@ -42,7 +63,7 @@ class Http {
       console.log(err, 'pasaron cosas reina');
       throw Error(err);
     }
-  }
+  };
 
   delete = async (coleccion, id) => {
     try {
@@ -55,7 +76,7 @@ class Http {
       console.log(err, 'pasaron cosas reina');
       throw Error(err);
     }
-  }
+  };
 
   search = async (coleccion, body) => {
     try {

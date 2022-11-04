@@ -2,15 +2,14 @@ import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import Grilla from './Grilla';
 import {createStackNavigator} from '@react-navigation/stack';
-// import Listado from './Listado';
-// import Detalle from './Detalle';
 import Principal from './Principal';
 import categorias from '../categorias';
 import perfil from '../perfil';
 import escanear from '../escanear';
 import ingredientes from '../ingredientes';
 import Detalle from '../detalle';
-import SubCategorias from '../subcategorias';
+import Productos from '../productos';
+import Producto from '../producto';
 const Stack = createStackNavigator();
 
 const Home = () => {
@@ -22,7 +21,8 @@ const Home = () => {
       <Stack.Screen name="escanear" component={escanear} />
       <Stack.Screen name="ingredientes" component={ingredientes} />
       <Stack.Screen name="Detalle" component={Detalle} />
-      <Stack.Screen name="SubCategorias" component={SubCategorias} />
+      <Stack.Screen name="Productos" component={Productos} />
+      <Stack.Screen name="Producto" component={Producto} />
     </Stack.Navigator>
   );
 };

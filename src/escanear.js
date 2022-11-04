@@ -12,6 +12,7 @@ import {
   Button,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import Http from './lib/http';
 
 export default class BarcodeScan extends Component {
   constructor(props) {
@@ -48,9 +49,15 @@ export default class BarcodeScan extends Component {
   };
 
   onBarCodeRead = e => {
-    Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
     //buscar en la base de datos
-    
+    console.log(e.data);
+    const getdata = async () => {
+      let res = await Http.instance.buscarProducto(e.data).then(respuesta => {
+        console.log("respuesta", respuesta);
+        this.props.navigation.navigate('Producto', {item: respuesta});
+      });
+    };
+    getdata();
   };
   render() {
     return (
@@ -78,11 +85,9 @@ export default class BarcodeScan extends Component {
             buttonNegative: 'Cancel',
           }}
           onGoogleVisionBarcodesDetected={({barcodes}) => {
-            console.log(barcodes);
+            //console.log(barcodes);
           }}
-          refreshAuthorizationStatus={true}>
-          
-        </RNCamera>
+          refreshAuthorizationStatus={true}></RNCamera>
         <View style={styles.bottomOverlay}>
           <TouchableOpacity
             onPress={() => this.handleTourch(this.state.torchOn)}>
