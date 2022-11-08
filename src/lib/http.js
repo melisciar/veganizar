@@ -25,9 +25,11 @@ class Http {
   buscarProducto = async codigo => {
     try {
       let producto = {};
+      console.log('codigo', codigo);
+      console.log(typeof codigo);
       await firestore()
         .collection('productos')
-        .where('codbarra', '==', parseInt(codigo))
+        .where('codbarras', '==', codigo)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {

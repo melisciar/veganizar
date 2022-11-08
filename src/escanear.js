@@ -50,11 +50,16 @@ export default class BarcodeScan extends Component {
 
   onBarCodeRead = e => {
     //buscar en la base de datos
-    console.log(e.data);
+    //si existe, mostrar el producto
+    //si no existe, llama a la vista de crear producto
+    console.log(e.data)
     const getdata = async () => {
       let res = await Http.instance.buscarProducto(e.data).then(respuesta => {
-        console.log("respuesta", respuesta);
-        this.props.navigation.navigate('Producto', {item: respuesta});
+        if (Object.keys(respuesta).length > 0) {
+          this.props.navigation.navigate('Producto', {item: respuesta});
+        } else {
+          this.props.navigation.navigate('AltaProducto', {item: e.data});
+        }
       });
     };
     getdata();

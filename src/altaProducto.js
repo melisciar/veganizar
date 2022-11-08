@@ -1,6 +1,7 @@
 /*
     Pantalla para dar de alta productos en la colección "productos" de la base de datos.
     Estrucutra:
+    - id: igual al código de barras
     - Código de barras (obligatorio)(solo números)
     - Nombre (obligatorio)
     - Descripción (opcional)
@@ -12,37 +13,48 @@
     - Contiene (opcional) (array de strings)
     - Sin tacc (opcional) (booleano)
     - Vegetariano (opcional) (booleano)
-    - Categoría (opcional) (array de strings)
+    - Categoría (opcional) (array de strings) (se puede seleccionar más de una) (se pueden obtener de la colección "categorias")
     - Imagen (opcional) (url)
 */
 
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {useNavigation} from '@react-navigation/native';
-import {db} from '../firebase';
+import firestore from '@react-native-firebase/firestore';
 
-const AltaProducto = () => {
-  const [codigo, setCodigo] = useState('');
+const AltaProducto = ({route}) => {
+  //const [codigo, setCodigo] = useState('');
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [marca, setMarca] = useState('');
-  const [ingredientes, setIngredientes] = useState('');
+  const [ingredientes, setIngredientes] = useState([]);
   const [vegano, setVegano] = useState('');
   const [dudoso, setDudoso] = useState('');
-  const [puedeContener, setPuedeContener] = useState('');
-  const [contiene, setContiene] = useState('');
+  const [puedeContener, setPuedeContener] = useState([]);
+  const [contiene, setContiene] = useState([]);
   const [sinTacc, setSinTacc] = useState('');
   const [vegetariano, setVegetariano] = useState('');
   const [categoria, setCategoria] = useState('');
   const [imagen, setImagen] = useState('');
+  const {item} = route.params;
 
+  //inicializar el codigo de barras con el codigo de barras del producto escaneado
+  const codigo = item
   const navigation = useNavigation();
 
   const altaProducto = () => {
-    db.collection('productos')
+    firestore()
+      .collection('productos', codigo)
       .add({
-        codigo: codigo,
+        codbarras: codigo,
         nombre: nombre,
         descripcion: descripcion,
         marca: marca,
@@ -66,15 +78,9 @@ const AltaProducto = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Alta de producto</Text>
+    <ScrollView Containerstyle={styles.container}>
+      <View style={styles.container}>
       <View style={styles.form}>
-        <Text style={styles.label}>Código de barras</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Código de barras"
-          onChangeText={text => setCodigo(text)}
-        />
         <Text style={styles.label}>Nombre</Text>
         <TextInput
           style={styles.input}
@@ -97,7 +103,7 @@ const AltaProducto = () => {
         <TextInput
           style={styles.input}
           placeholder="Ingredientes"
-          onChangeText={text => setIngredientes(text)}
+          onChangeText={text => setIngredientes(text.split(','))}
         />
         <Text style={styles.label}>Vegano</Text>
         <Picker
@@ -121,13 +127,13 @@ const AltaProducto = () => {
         <TextInput
           style={styles.input}
           placeholder="Puede contener"
-          onChangeText={text => setPuedeContener(text)}
+          onChangeText={text => setPuedeContener(text.split(','))}
         />
         <Text style={styles.label}>Contiene</Text>
         <TextInput
           style={styles.input}
           placeholder="Contiene"
-          onChangeText={text => setContiene(text)}
+          onChangeText={text => setContiene(text.split(','))}
         />
         <Text style={styles.label}>Sin tacc</Text>
         <Picker
@@ -154,15 +160,15 @@ const AltaProducto = () => {
           onValueChange={(itemValue, itemIndex) => setCategoria(itemValue)}>
           <Picker.Item label="Seleccionar" value="" />
           <Picker.Item label="Bebidas" value="bebidas" />
-          <Picker.Item label="Carnes" value="carnes" />
+          <Picker.Item label="Congelados" value="congelados" />
           <Picker.Item label="Cereales" value="cereales" />
           <Picker.Item label="Dulces" value="dulces" />
-          <Picker.Item label="Frutas" value="frutas" />
+          <Picker.Item label="Galletitas" value="galletitas" />
           <Picker.Item label="Lácteos" value="lacteos" />
           <Picker.Item label="Legumbres" value="legumbres" />
           <Picker.Item label="Panadería" value="panaderia" />
-          <Picker.Item label="Pescados" value="pescados" />
-          <Picker.Item label="Verduras" value="verduras" />
+          <Picker.Item label="Pastas" value="pastas" />
+          <Picker.Item label="Snacks" value="snacks" />
         </Picker>
         <Text style={styles.label}>Imagen</Text>
         <TextInput
@@ -172,16 +178,20 @@ const AltaProducto = () => {
         />
         <Button title="Dar de alta" onPress={altaProducto} />
       </View>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
+
+export default AltaProducto;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'lightgreen',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: '5%',
   },
   titulo: {
     fontSize: 20,
@@ -190,15 +200,24 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '80%',
+    padding: '5%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontWeight: 'bold',
     marginTop: 20,
+    width: '100%',
   },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
+    padding: 10,
+    width: '100%',
   },
 });

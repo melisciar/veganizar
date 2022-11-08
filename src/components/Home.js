@@ -10,6 +10,7 @@ import ingredientes from '../ingredientes';
 import Detalle from '../detalle';
 import Productos from '../productos';
 import Producto from '../producto';
+import AltaProducto from '../altaProducto';
 const Stack = createStackNavigator();
 
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
       <Stack.Screen name="Detalle" component={Detalle} />
       <Stack.Screen name="Productos" component={Productos} />
       <Stack.Screen name="Producto" component={Producto} />
+      <Stack.Screen name="AltaProducto" component={AltaProducto} />
     </Stack.Navigator>
   );
 };
