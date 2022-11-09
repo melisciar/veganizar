@@ -10,7 +10,8 @@ const Productos = ({route}) => {
   const [loading, setLoading] = useState(false);
   const getData = async () => {
     setLoading(true);
-    let res = await Http.instance.get('productos');
+    console.log(element.item.nombre)
+    let res = await Http.instance.buscarProductos(element.item.nombre);
     setProd(res);
   };
   useEffect(() => {

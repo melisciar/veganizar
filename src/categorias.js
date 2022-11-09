@@ -24,7 +24,7 @@ const Categorias = props => {
         numColumns={2}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('SubCategorias', {item})}
+            onPress={() => props.navigation.navigate('Productos', {item})}
             style={[styles.item]}>
             <Text style={styles.texto}>{item.nombre}</Text>
           </TouchableOpacity>

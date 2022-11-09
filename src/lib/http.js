@@ -25,8 +25,6 @@ class Http {
   buscarProducto = async codigo => {
     try {
       let producto = {};
-      console.log('codigo', codigo);
-      console.log(typeof codigo);
       await firestore()
         .collection('productos')
         .where('codbarras', '==', codigo)
@@ -38,6 +36,27 @@ class Http {
           });
         });
       return producto;
+    } catch (err) {
+      console.log(err, 'pasaron cosas reina');
+      throw Error(err);
+    }
+  };
+
+  //Filtrar productos por la categoría
+  buscarProductos = async cat => {
+    try {
+      const arreglo = [];
+      await firestore()
+        .collection('productos')
+        .where('categoria', '==', cat)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            arreglo.push(doc.data());
+          });
+        });
+      return arreglo;
     } catch (err) {
       console.log(err, 'pasaron cosas reina');
       throw Error(err);
