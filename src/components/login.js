@@ -3,8 +3,13 @@ import {View, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 const Login = () => {
-  return <View></View>;
+  return <View>
+    <Text>Login</Text>
+    <AppAuth/>
+  </View>;
 };
+
+export default Login;
 
 const usuarioAnonimo = () => {
   auth()

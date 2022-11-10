@@ -1,8 +1,9 @@
 import React from 'react';
 import {Text} from 'react-native';
+import Login from './components/login';
 
 const Perfil = () => {
-  return <Text>Acá va el perfil de usuario</Text>;
+  return <Login/>;
 };
 
 export default Perfil;

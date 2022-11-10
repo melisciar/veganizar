@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
   item: {
     margin: 2,
     padding: '10%',
-    borderRadius: 2,
-    backgroundColor: 'green',
+    borderRadius: 5,
+    flex: 1,
+    backgroundColor: '#B4E37D',
   },
 });

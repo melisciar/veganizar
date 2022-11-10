@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {StyleSheet} from 'react-native';
 
 //Página de detalle de producto
@@ -29,15 +29,17 @@ const Producto = ({route}) => {
   const {item} = route.params;
   return (
     <View style={styles.container}>
+      <View style={styles.contenedor}>
       <Text style={styles.titulo}>{item.nombre}</Text>
       <Text style={styles.texto}>{item.marca}</Text>
       <Text style={styles.texto}>{item.descripcion}</Text>
-      {/*<Image style={styles.imagen} source={{uri: item.imagen}} />*/}
+      <Image style={styles.imagen} source={{uri: item.imagen || "https://placetaytay.com/200x200"}} />
       <Text style={styles.texto}> Ingredientes: </Text>
-      <Text style={styles.texto}>{item.ingredientes}</Text>
+      <Text style={styles.texto}>{item.ingredientes.join(", ")}</Text>
       <Text style={styles.texto}>
         {item.vegano ? 'Vegano' : item.dudoso ? 'Dudoso' : 'No vegano'}
       </Text>
+      </View>
     </View>
   );
 };
@@ -51,16 +53,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  contenedor: {
+    flex: 10,
+    height: '80%',
+    backgroundColor: '#F0FAE5',
+    borderRadius: 5,
+    margin: 5,
+    padding: 7,
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
   titulo: {
     fontSize: 30,
     padding: 5,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
   texto: {
     fontSize: 20,
     padding: 5,
+    textAlign: 'center',
   },
   imagen: {
     width: 200,
     height: 200,
+    alignSelf: 'center',
   },
 });
